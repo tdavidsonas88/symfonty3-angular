@@ -69,4 +69,20 @@ class BlogPostsController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/delete/{blogPost}", name="delete")
+     */
+    public function deleteAction(Request $request, BlogPost $blogPost) {
+
+        if($blogPost === null) {
+            return $this->redirectToRoute('list');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($blogPost);
+        $em->flush();
+
+        return $this->redirectToRoute('list');
+    }
+
 }
